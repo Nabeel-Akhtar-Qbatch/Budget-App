@@ -1,6 +1,9 @@
+from distutils.command.build_scripts import build_scripts
+from budget import Budget
 from food import Food
 from home import Home
 from menu import menu_selection, splash_printer
+from saving import Saving
 from tax_calculator import tax
 from print_percentage import printProgressBar
 from travel import Travel
@@ -14,21 +17,25 @@ def main():
             print("Not Valid Amount to enter")
             main()
         else:
-            foodexp = input("Enter Food Expense: ")
+            foodexp = int(input("Enter Food Expense: "))
             food = Food(foodexp, income)
-            homeexp = input("Enter Home Expense: ")
+            homeexp = int(input("Enter Home Expense: "))
             home = Home(homeexp, income)
-            travexp = input("Enter Travel Expenses: ")
+            travexp = int(input("Enter Travel Expenses: "))
             travel = Travel(travexp, income)
 
-            pertravel = int(travel.travel_budget(income))
-            perhome = int(home.home_budget(income))
-            perfood = int(food.food_budget(income))
-            
+            pertravel = float(travel.travel_budget(income))
+            perhome = float(home.home_budget(income))
+            perfood = float(food.food_budget(income))
+            saved = float((foodexp + homeexp + travexp) - income)
+            if saved < 0: saved = saved * -1
+            save = Saving(saved, income)
+            persave = int(save.savings(income))
             print("\nPercentages of Different expenses from total income\n")
             printProgressBar(perfood, "Food Expenses", foodexp)
             printProgressBar(perhome, "Home Expenses", homeexp)
             printProgressBar(pertravel, "Travel Expenses", travexp)
+            printProgressBar(persave, "Saved Amount", saved)
             
     if sel == 2:
         income = int(input("Enter your monthly salary: "))
