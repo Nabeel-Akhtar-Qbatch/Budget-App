@@ -1,11 +1,9 @@
 from datetime import datetime
 
 class Budget():
-    balance = 0
     "Class of maintaining mounthly budget"
     def __init__ (self, amount):
-        self.amount += amount
-        Budget.balance = amount
+        self.amount = amount
     
     def check_fund(self, amount):
         if self.amount < amount: return True
@@ -19,5 +17,4 @@ class Budget():
             self.amount -= amount
             return True
         else: return False
-        
         
